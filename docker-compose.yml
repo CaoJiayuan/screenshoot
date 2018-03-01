@@ -1,0 +1,6 @@
+app:
+    build: .
+    volumes:
+        - ./shoots:/app/shoots
+    ports:
+        - 3003:3000
