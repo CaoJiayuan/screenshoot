@@ -5,7 +5,8 @@ var app = express()
 
 app.get('/', function (req, res) {
     puppeteer.launch({
-        executablePath: process.env.CHROME_BIN || null
+        executablePath: process.env.CHROME_BIN || null,
+        args: ['--no-sandbox', '--headless', '--disable-gpu']
     }).then(browser => {
         browser.newPage().then(page => {
             page.setViewport({width:1360,height:768}).then(() => page.goto(req.query.url).then(p => {
