@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const fs = require('fs');
 
 var express = require('express')
 var app = express()
@@ -15,8 +16,13 @@ app.get('/', function (req, res) {
                 console.log(`Shooting... [${req.query.url}] `);
                 page.title().then(title => {
                     let name = req.query.name || title
-
-                    page.screenshot({path: `./shoots/${name}.png`}).then(re => browser.close())
+                    let type = req.query.type || 'png'
+                    let path = __dirname + '/shoots/' + name + '.' + type
+                    let dir =  path.substring(0, path.lastIndexOf('/'));
+                    if (!fs.existsSync(dir)){
+                        fs.mkdirSync(dir)
+                    }
+                    page.screenshot({path: path}).then(re => browser.close())
                 })
             }))
         })
