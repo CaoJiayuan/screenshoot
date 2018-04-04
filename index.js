@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 
 var express = require('express')
 var app = express()
-
+app.use(express.static('.'))
 app.get('/', function (req, res) {
     puppeteer.launch({
         executablePath: process.env.CHROME_BIN || null,
